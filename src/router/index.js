@@ -7,14 +7,6 @@ let router = new VueRouter({
 
     mode: 'history',
     routes: [
-        {
-            path: '/',
-            name: 'home',
-            redirect: '/login',
-            meta: {
-                requiresAuth: false
-            }
-        },
         { 
             path: '/login',
             name: 'login',
@@ -24,30 +16,38 @@ let router = new VueRouter({
             }
         },
         {
+            path: '/cliente',
+            name: 'clientes',
+            component: () => import("@/views/Clients"),
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '*',
-            redirect: '/'
+            name: 'unknown',
+            redirect: { name: 'login' }
         }
     ]
 })
 
 router.beforeEach((to, from, next) => {
+
+    const authenticated = localStorage.getItem('jwt');
+
     if(to.matched.some(record => record.meta.requiresAuth)){
-
-        const authenticated = this.$store.state.auth.user;
-
         if(authenticated == null){
             // not authenticated, you need to login first
             next({
                 name: 'login',
                 params: { nextUrl: to.fullPath }
-            })
+            });
         } else {
-            // authenticated, go somewhere else if you are going
-            // to '/login'
-            next({
-                name: to.name == 'login' ? 'cliente' : to.name
-            })
-        } 
+            next();
+        }next() 
+    } else if( to.name == 'login' && authenticated ){
+
+        next({ name: 'clientes' });
     } else {
         next();
     }

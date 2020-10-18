@@ -11,7 +11,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCoffee,
   faEye,
-  faEyeSlash
+  faEyeSlash,
+  faAngleLeft,
+  faAngleRight,
+  faExclamationCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -19,7 +22,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(
   faCoffee,
   faEye,
-  faEyeSlash
+  faEyeSlash,
+  faAngleLeft,
+  faAngleRight,
+  faExclamationCircle
   );
 
 Vue.component('vue-fontawesome', FontAwesomeIcon);

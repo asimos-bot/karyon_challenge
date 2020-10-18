@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-const API_URL = "http://controle.karyon.com.br:8080/ControleKaryonAPI"
+const API_URL = "http://controle.karyon.com.br:8080/ControleKaryonAPI";
 
 class Authentication {
+
     login(creds) {
         return axios
                     .post(API_URL + '/login', {
@@ -10,8 +11,8 @@ class Authentication {
                         senha: creds.password
                     })
                     .then(response => {
-                        if( response.data.accessToken ) {
-                            localStorage.setItem('user', JSON.stringify(response.data));
+                        if( response.data.token ) {
+                            localStorage.setItem('jwt', JSON.stringify(response.data));
                         }
 
                         return response.data;
@@ -19,14 +20,14 @@ class Authentication {
     }
 
     logout(){
-        localStorage.removeItem('user');
+        localStorage.removeItem('jwt');
     }
 
     header(){
-        let user = JSON.parse(localStorage.getItem('user'));
+        let user = JSON.parse(localStorage.getItem('jwt'));
 
-        return user && user.accessToken ?
-            { Authorization: 'Bearer ' + user.accessToken } :
+        return user && user.token ?
+            { Authorization: user.type + user.token } :
             {};
     }
 }

@@ -33,7 +33,6 @@
 </template>
 
 <script>
-
 export default {
     name: 'Login',
     data() {
@@ -48,7 +47,7 @@ export default {
             this.$store.dispatch('auth/login', {
                 email: this.email,
                 password: this.password
-            }).then(() => {
+            }, {root: true}).then(() => {
                 this.$router.push('/cliente');
             }).catch(() => {
                 this.$buefy.toast.open({
