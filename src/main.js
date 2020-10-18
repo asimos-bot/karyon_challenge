@@ -14,7 +14,8 @@ import {
   faEyeSlash,
   faAngleLeft,
   faAngleRight,
-  faExclamationCircle
+  faExclamationCircle,
+  faArrowUp
 } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -25,7 +26,8 @@ library.add(
   faEyeSlash,
   faAngleLeft,
   faAngleRight,
-  faExclamationCircle
+  faExclamationCircle,
+  faArrowUp
   );
 
 Vue.component('vue-fontawesome', FontAwesomeIcon);

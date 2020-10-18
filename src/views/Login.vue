@@ -48,7 +48,7 @@ export default {
                 email: this.email,
                 password: this.password
             }, {root: true}).then(() => {
-                this.$router.push('/cliente');
+                this.$router.push('/clients');
             }).catch(() => {
                 this.$buefy.toast.open({
                     duration: 1500,

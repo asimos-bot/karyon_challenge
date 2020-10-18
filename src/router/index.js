@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from '../store';
 
 Vue.use(VueRouter);
 
@@ -16,9 +17,17 @@ let router = new VueRouter({
             }
         },
         {
-            path: '/cliente',
-            name: 'clientes',
+            path: '/clients',
+            name: 'clients',
             component: () => import("@/views/Clients"),
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/client/:id',
+            name: 'client',
+            component: () => import("@/views/Client"),
             meta: {
                 requiresAuth: true
             }
@@ -33,7 +42,7 @@ let router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 
-    const authenticated = localStorage.getItem('jwt');
+    const authenticated = store.state.auth.jwt;
 
     if(to.matched.some(record => record.meta.requiresAuth)){
         if(authenticated == null){
@@ -47,7 +56,7 @@ router.beforeEach((to, from, next) => {
         }next() 
     } else if( to.name == 'login' && authenticated ){
 
-        next({ name: 'clientes' });
+        next({ name: 'clients' });
     } else {
         next();
     }

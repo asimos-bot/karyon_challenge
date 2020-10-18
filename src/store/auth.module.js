@@ -1,31 +1,31 @@
 import AuthService from '../services/auth.js';
 
-const user = JSON.parse(localStorage.getItem('jwt'));
+const jwt = JSON.parse(localStorage.getItem('jwt'));
 
 // if in development mode, give us a mock authentication
-const initState = { user };
+const initState = { jwt };
 
 export const auth = {
     namespaced: true,
     state: initState,
     mutations: {
-        LOGIN_SUCESS(state, user) {
-            state.user = user;
+        LOGIN_SUCESS(state, jwt) {
+            state.jwt = jwt;
         },
         LOGIN_FAILURE(state) {
-            state.user = null;
+            state.jwt = null;
         },
         LOGOUT(state) {
-            state.user = null;
+            state.jwt = null;
         }
     },
     actions: {
         login({ commit }, user) {
             return AuthService.login(user)
             .then(
-                user => {
-                    commit('LOGIN_SUCESS', user);
-                    return Promise.resolve(user);
+                jwt => {
+                    commit('LOGIN_SUCESS', jwt);
+                    return Promise.resolve(jwt);
             })
             .catch(
                 error => {

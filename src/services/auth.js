@@ -19,15 +19,15 @@ class Authentication {
                     })
     }
 
-    logout(){
+    logout() {
         localStorage.removeItem('jwt');
     }
 
-    header(){
-        let user = JSON.parse(localStorage.getItem('jwt'));
+    header() {
+        let jwt = JSON.parse(localStorage.getItem('jwt'));
 
-        return user && user.token ?
-            { Authorization: user.type + user.token } :
+        return jwt && jwt.token ?
+            { Authorization: jwt.type + jwt.token } :
             {};
     }
 }
