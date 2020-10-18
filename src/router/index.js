@@ -33,7 +33,7 @@ let router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresAuth)){
 
-        const authenticated = localStorage.getItem('jwt')
+        const authenticated = this.$store.state.auth.user;
 
         if(authenticated == null){
             // not authenticated, you need to login first

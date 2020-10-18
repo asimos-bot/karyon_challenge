@@ -2,13 +2,6 @@ import Vue from 'vue'
 import router from './router'
 import store from './store'
 import App from './App.vue'
-import axios from 'axios';
-
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-axios.defaults.headers.common = {
-  "Access-Control-Allow-Origin": "*"
-};
 
 import './styles/theme.scss';
 

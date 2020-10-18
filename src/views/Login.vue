@@ -23,7 +23,7 @@
                 </b-field>
 
                 <b-field class="has-text-centered">
-                    <b-button class="is-primary" @click="login()">
+                    <b-button class="is-primary" @click="submit()">
                         Login
                     </b-button>
                 </b-field>
@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 
 export default {
     name: 'Login',
@@ -44,20 +43,20 @@ export default {
         }
     },
     methods: {
-        login: function(){
-            axios
-                .post("http://controle.karyon.com.br:8080/ControleKaryonAPI/login", {
-                    email: "teste",
-                    senha: "123456"
+        submit: function(){
+
+            this.$store.dispatch('auth/login', {
+                email: this.email,
+                password: this.password
+            }).then(() => {
+                this.$router.push('/cliente');
+            }).catch(() => {
+                this.$buefy.toast.open({
+                    duration: 1500,
+                    message: 'Credenciais inválidas',
+                    type: 'is-danger'
                 })
-                .then(response => {
-                    if(response.data.accessToken){
-                        console.log("aqui o access token: ", JSON.stringify(response.data))
-                    }
-                })
-                .catch(error => {
-                    console.log("here is the error: ", error)
-                });
+            });
         }
     }
 }
@@ -65,12 +64,13 @@ export default {
 
 <style lang="scss">
 @import "../styles/theme.scss";
+$top-gap: 20vh;
 #login {
-    margin: 30px auto;
+    margin: $top-gap auto;
 }
 @media (max-width: 400px)  {
     #login {
-        margin: 30px 0;
+        margin: $top-gap 0;
         max-width: 98vw;
     }
 }
