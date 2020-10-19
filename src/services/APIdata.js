@@ -3,6 +3,35 @@ import axios from 'axios';
 
 const API_URL = "http://controle.karyon.com.br:8080/ControleKaryonAPI";
 
+const equipmentModel = {
+
+    "equipamento": {
+        "id": 5
+    },
+    "status": "",
+    "nrSerial": "",
+    "observacao": "",
+    "empresaDistribuidora": "",
+    "dtCancelamento": "",
+    "tipoSubstituicao": false,
+    "idEquipamentoCliente": 1,
+    "servidorCliente": null,
+    "dtValidade": null,
+    "faturadoPor": 0,
+    "valorEquipamento": 0.0,
+    "versaoDriver": "",
+    "atualizarDriver": false,
+    "versaoDriverAtualizacao": null,
+    "estacao": null,
+    "flagDiasSemExames": 0
+}
+
+const nullTranslator = {
+    "string": "",
+    "object": null,
+    "number": 0
+}
+
 class APIData {
 
     getClients(){
@@ -56,6 +85,20 @@ class APIData {
     }
 
     createClientEquipment(id, data){
+        //deep copy
+        data = JSON.parse(JSON.stringify(data))
+
+        //add attributes to object if necessary
+        for(const key in equipmentModel){
+            if( !(key in data) ){
+
+                data[key] = nullTranslator[typeof(equipmentModel[key])]
+            }
+        }
+        //set client id in 'equipamento' field
+        data.equipamento={}
+        data.equipamento.id = id;
+        console.log(data)
         return axios.post(API_URL + '/equipamento-cliente/cliente/' + id, {
             headers: auth.header(),
             data: data
@@ -63,6 +106,23 @@ class APIData {
     }
 
     updateClientEquipment(id, data){
+
+        //deep copy
+        data = JSON.parse(JSON.stringify(data))
+
+        //add attributes to object if necessary
+        for(const key in equipmentModel){
+            if( !(key in data) ){
+
+                data[key] = nullTranslator[typeof(equipmentModel[key])]
+            }
+        }
+
+        data.equipamento={}
+        data.equipamento.id = id;
+        data.dtCancelamento = String(data.dtCancelamento)
+
+        console.log(data)
         return axios.put(API_URL + '/equipamento-cliente/' + id, {
             headers: auth.header(),
             data: data

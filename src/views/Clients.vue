@@ -9,9 +9,9 @@
                 :narrowed=true
                 :paginated=true
                 :striped=true
-                per-page=12
+                per-page=13
                 :current-page="currentPage"
-                pagination-position="both"
+                pagination-position="top"
                 default-sort-direction="asc"
                 sort-icon="arrow-up"
                 sort-icon-size="is-medium"
